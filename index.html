@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Виджет погоды</title>
+    <link rel="stylesheet" href="base.css" />
+  </head>
+  <body>
+    <div class="weather-widget">
+      <h1>Погодный виджет</h1>
+      <input
+        type="text"
+        id="cityInput"
+        placeholder="Введите город или координаты (широта,долгота)"
+      />
+      <button id="getWeatherBtn">Получить погоду</button>
+      <div id="weatherInfo" class="weather-info">
+        <!-- Здесь будет отображаться информация о погоде -->
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
