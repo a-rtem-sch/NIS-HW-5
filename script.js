@@ -14,12 +14,14 @@ let pressure = document.getElementById('pressure');
 let main = document.querySelector('main');
 let result = document.querySelector('.result');
 
-const submit = document.getElementById('submit')
+let timeoutId;
+
+const submit = document.getElementById('submit');
 
 submit.addEventListener("click", (e) => {
     e.preventDefault();  
     if (result.classList.contains('hidden')) {
-        setTimeout(() => {
+        timeoutId = setTimeout(() => {
             result.classList.remove('hidden');
         }, 1000);
     }
@@ -30,14 +32,14 @@ submit.addEventListener("click", (e) => {
 
 const searchWeather = () => {
     let input = valueSearch.value.trim();
-    let temp = `${url}&q=${input}&appid=${id}&units=metric`
+    let temp;
 
-    // if (input.includes(',')) {
-    //     const [lat, lon] = input.split(',').map(coord => coord.trim());
-    //     temp = `${url}?lat=${lat}&lon=${lon}&appid=${id}&units=metric`;
-    // } else {
-    //     temp = `${url}&q=${input}&appid=${id}&units=metric`;
-    // }
+    if (input.includes(',')) {
+        const [lat, lon] = input.split(',').map(coord => coord.trim());
+        temp = `${url}?lat=${lat}&lon=${lon}&appid=${id}&units=metric`;
+    } else {
+        temp = `${url}&q=${input}&appid=${id}&units=metric`;
+    }
 
     let xhr = new XMLHttpRequest();
     xhr.open("GET", temp, true);
@@ -48,7 +50,6 @@ const searchWeather = () => {
             console.log(data);
             if(data.cod == 200){
                 city.querySelector('h2').innerHTML = data.name;
-                // city.querySelector('img').src = `https://flagsapi.com/${data.sys.country}/shiny/32.png`;
                 temperature.querySelector('img').src = `https://openweathermap.org/img/wn/${data.weather[0].icon}@4x.png`;
                 temperature.querySelector('span').innerText = data.main.temp;
                 description.innerText = data.weather[0].description;
@@ -58,14 +59,16 @@ const searchWeather = () => {
                 pressure.innerText = data.main.pressure;
             } else {
                 main.classList.add('error');
+                cancelTimeout()
                 setTimeout(() => {
                     main.classList.remove('error');
                 }, 1000);
             }
-            valueSearch.value = '';
+            // valueSearch.value = '';
         } else {
             console.error("Ошибка при выполнении запроса: " + xhr.statusText);
-            main.classList.add('error')
+            main.classList.add('error');
+            cancelTimeout()
             setTimeout(() => {
                 main.classList.remove('error');
             }, 1000);
@@ -73,7 +76,8 @@ const searchWeather = () => {
     };
     xhr.onerror = function() {
         console.error("Ошибка при выполнении запроса.");
-        main.classList.add('error')
+        cancelTimeout()
+        main.classList.add('error');
         setTimeout(() => {
             main.classList.remove('error');
         }, 1000);
@@ -81,9 +85,7 @@ const searchWeather = () => {
     xhr.send();
 }
 
-// // search Default
-// const initApp = () => {
-//     valueSearch.value = 'Washington';
-//     searchWeather();
-// }
-// initApp();
+// Function to cancel the timeout
+function cancelTimeout() {
+    clearTimeout(timeoutId);
+}
