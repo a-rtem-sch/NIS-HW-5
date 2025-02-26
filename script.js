@@ -19,7 +19,9 @@ const submit = document.getElementById('submit')
 submit.addEventListener("click", (e) => {
     e.preventDefault();  
     if (result.classList.contains('hidden')) {
-        result.classList.remove('hidden');
+        setTimeout(() => {
+            result.classList.remove('hidden');
+        }, 1000);
     }
     if(valueSearch.value != ''){
         searchWeather();
@@ -27,8 +29,19 @@ submit.addEventListener("click", (e) => {
 });
 
 const searchWeather = () => {
+    let input = valueSearch.value.trim();
+    let temp = `${url}&q=${input}&appid=${id}&units=metric`
+
+    // if (input.includes(',')) {
+    //     const [lat, lon] = input.split(',').map(coord => coord.trim());
+    //     temp = `${url}?lat=${lat}&lon=${lon}&appid=${id}&units=metric`;
+    // } else {
+    //     temp = `${url}&q=${input}&appid=${id}&units=metric`;
+    // }
+
     let xhr = new XMLHttpRequest();
-    xhr.open("GET", url + '&q=' + valueSearch.value, true);
+    xhr.open("GET", temp, true);
+
     xhr.onload = function() {
         if (xhr.status === 200) {
             let data = JSON.parse(xhr.responseText);
@@ -36,7 +49,7 @@ const searchWeather = () => {
             if(data.cod == 200){
                 city.querySelector('h2').innerHTML = data.name;
                 // city.querySelector('img').src = `https://flagsapi.com/${data.sys.country}/shiny/32.png`;
-                // temperature.querySelector('img').src = `https://openweathermap.org/img/wn/${data.weather[0].icon}@4x.png`;
+                temperature.querySelector('img').src = `https://openweathermap.org/img/wn/${data.weather[0].icon}@4x.png`;
                 temperature.querySelector('span').innerText = data.main.temp;
                 description.innerText = data.weather[0].description;
 
@@ -52,10 +65,18 @@ const searchWeather = () => {
             valueSearch.value = '';
         } else {
             console.error("Ошибка при выполнении запроса: " + xhr.statusText);
+            main.classList.add('error')
+            setTimeout(() => {
+                main.classList.remove('error');
+            }, 1000);
         }
     };
     xhr.onerror = function() {
         console.error("Ошибка при выполнении запроса.");
+        main.classList.add('error')
+        setTimeout(() => {
+            main.classList.remove('error');
+        }, 1000);
     };
     xhr.send();
 }
