@@ -1,24 +1,54 @@
-<!doctype html>
-<html lang="ru">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Виджет погоды</title>
-    <link rel="stylesheet" href="base.css" />
-  </head>
-  <body>
-    <div class="weather-widget">
-      <h1>Погодный виджет</h1>
-      <input
-        type="text"
-        id="cityInput"
-        placeholder="Введите город или координаты (широта,долгота)"
-      />
-      <button id="getWeatherBtn">Получить погоду</button>
-      <div id="weatherInfo" class="weather-info">
-        <!-- Здесь будет отображаться информация о погоде -->
-      </div>
-    </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="app.css">
+</head>
+<body>
+    <main>
+        <form>
+            <input type="text" id="name" placeholder="Введите город:" autocomplete="off">
+            <button>
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+        </form>
+        <section class="result">
+
+            <div class="name">
+                <h2>London</h2> 
+                <img src="https://flagsapi.com/GB/shiny/32.png">
+            </div>
+
+            <div class="temperature">
+                <img src="https://openweathermap.org/img/wn/10d@4x.png">
+                <h2>
+                    <span>31</span>
+                    <sup>o</sup>
+                </h2> 
+            </div>
+            <p class="description">overcast clouds</p>
+            <ul>
+                <li>
+                    <span>clouds</span>
+                    <i class="fa-solid fa-cloud"></i>
+                    <span id="clouds">98</span>%
+                </li>
+                <li>
+                    <span>humidity</span>
+                    <i class="fa-solid fa-droplet"></i>
+                    <span id="humidity">98</span>%
+                </li>
+                <li>
+                    <span>pressure</span>
+                    <i class="fa-solid fa-gauge"></i>
+                    <span id="pressure">1011</span>hPa
+                </li>
+            </ul>
+        </section>
+    </main>
+
     <script src="script.js"></script>
-  </body>
+</body>
 </html>
