@@ -36,7 +36,7 @@ const searchWeather = () => {
 
     if (input.includes(',')) {
         const [lat, lon] = input.split(',').map(coord => coord.trim());
-        temp = `${url}?lat=${lat}&lon=${lon}&appid=${id}&units=metric`;
+        temp = `${url}lat=${lat}&lon=${lon}&appid=${id}&units=metric`;
     } else {
         temp = `${url}&q=${input}&appid=${id}&units=metric`;
     }
