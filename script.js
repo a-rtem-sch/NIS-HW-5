@@ -28,6 +28,9 @@ submit.addEventListener("click", (e) => {
     if(valueSearch.value != ''){
         searchWeather();
     }
+    else {
+        cancelTimeout()
+    }
 });
 
 const searchWeather = () => {
