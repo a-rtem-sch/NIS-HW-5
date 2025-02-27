@@ -45,8 +45,9 @@ input, form button{
   box-sizing: border-box;
 }
 .form-search{
-  width: 20px;
+  width: 18px;
   margin-top: 20%;
+  margin-right: 10%;
 }
 
 .result{
