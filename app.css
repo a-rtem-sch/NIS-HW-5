@@ -37,6 +37,7 @@ form{
   justify-content: space-between;
 }
 input, form button{
+  font-family: sans-serif;
   border: none;
   background-color: transparent;
   outline: none;
