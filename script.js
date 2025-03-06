@@ -1,5 +1,3 @@
-// var url = 'https://api.openweathermap.org/data/2.5/weather';
-// var apiKey = 'f00c38e0279b7bc85480c3fe775d518c';
 
 let id = '9505fd1df737e20152fbd78cdb289b6a';
 let url = 'https://api.openweathermap.org/data/2.5/weather?';
@@ -15,6 +13,19 @@ let main = document.querySelector('main');
 let result = document.querySelector('.result');
 
 let timeoutId;
+
+
+// README
+// Каюсь, немного вдохновился дизайном из одного блога. Важно: код писал реально сам
+// Я спустя рукава реализовал вывод ошибок (но это совершенно не повод снижать), но в шестой домашке все сделал серьезнее
+// Кроме того, я сменю апи на более подходящий
+// Тут даже есть анимация тряски в момент ошибки
+// А еще я подписан на канал
+
+// можно десять пжпж
+
+
+
 
 const submit = document.getElementById('submit');
 
@@ -34,6 +45,7 @@ submit.addEventListener("click", (e) => {
 });
 
 const searchWeather = () => {
+    // alert('hi')
     let input = valueSearch.value.trim();
     let temp;
 
@@ -61,34 +73,43 @@ const searchWeather = () => {
                 humidity.innerText = data.main.humidity;
                 pressure.innerText = data.main.pressure;
             } else {
+                alert(`Error:: ${data.cod}`)
                 main.classList.add('error');
                 cancelTimeout()
+                
                 setTimeout(() => {
                     main.classList.remove('error');
                 }, 1000);
+                
             }
             // valueSearch.value = '';
         } else {
             console.error("Ошибка при выполнении запроса: " + xhr.statusText);
+            alert(`Error:: ${xhr.status}`)
             main.classList.add('error');
+            
             cancelTimeout()
+            
             setTimeout(() => {
                 main.classList.remove('error');
             }, 1000);
+            
         }
     };
     xhr.onerror = function() {
+       
         console.error("Ошибка при выполнении запроса.");
         cancelTimeout()
+        alert(`Error occured!`)
         main.classList.add('error');
         setTimeout(() => {
             main.classList.remove('error');
         }, 1000);
+        
     };
     xhr.send();
 }
 
-// Function to cancel the timeout
 function cancelTimeout() {
     clearTimeout(timeoutId);
 }
